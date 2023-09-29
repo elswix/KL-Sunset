@@ -116,4 +116,5 @@ settarget "10.10.10.10"
 
 #### My Blog: 
 
++ [CTFs WriteUPs & More](https://elswix.github.io)
 + [WebHackology - Pentesting & Web Development](https://webhackology.vercel.app/)
