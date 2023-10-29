@@ -11,6 +11,7 @@ turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m" 
 
 
+tput civis 
 export CUSER=$(whoami)
 
 
@@ -21,13 +22,13 @@ if [ $CUSER = "root" ]; then
 fi
 
 
-echo -e "${greenColour}[+]${endColour} ${grayColour}Updating KL-Sunset...${endColour}" 
-echo -e "\n${yellowColour}[*]${endColour} ${grayColour}Author: elswix${endColour}" 
+echo -e "\n${greenColour}[+]${endColour} ${grayColour}Updating KL-Sunset...${endColour}" 
+echo -e "${yellowColour}[*]${endColour} ${grayColour}Author: elswix${endColour}" 
 
-sleep 5
+sleep 2
 
 cp -r .config/i3 /home/$CUSER/.config/
 cp -r .config/rofi /home/$CUSER/.config/
 
-
-
+echo -e "\n${greenColour}[+]${endColour} ${grayColour}KL-Sunset has been successfully updated!${endColour}\n"
+tput cnorm

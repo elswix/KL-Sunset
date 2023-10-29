@@ -1,7 +1,5 @@
 #!/bin/bash
  
-#!/bin/bash
- 
 #Colours
 greenColour="\e[0;32m\033[1m"
 endColour="\033[0m\e[0m"
@@ -72,7 +70,7 @@ sudo cp /root/.zshrc /tmp/.backupConfig/root/.zshrc
 sudo chown $USER:$USER -R /opt 
 
 clear 
-echo "${greenColour}[+]${endColour} ${grayColour}Installing dependencies...${endColour}"
+echo -e "${greenColour}[+]${endColour} ${grayColour}Installing dependencies...${endColour}"
 
 sudo apt-get install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail burpsuite
 
