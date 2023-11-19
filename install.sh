@@ -72,13 +72,19 @@ sudo chown $USER:$USER -R /opt
 clear 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing dependencies...${endColour}"
 
-sudo apt-get install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail burpsuite
+sudo apt install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail burpsuite
 
-sudo apt-get install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev libasound2-dev libxcb-xtest0-dev libxcb-ewmh-dev autoconf meson
+sudo apt install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev libasound2-dev libxcb-xtest0-dev libxcb-ewmh-dev autoconf meson
 
-sudo apt-get install -y libxcb-render-util0-dev libxcb-shape0-dev libxcb-xfixes0-dev 
+sudo apt install -y libxcb-render-util0-dev libxcb-shape0-dev libxcb-xfixes0-dev 
 
-sudo apt-get install -y cmake cmake-data pkg-config python3-sphinx libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev
+sudo apt install -y cmake cmake-data pkg-config python3-sphinx libcairo2-dev libxcb1-dev libxcb-util0-dev libxcb-randr0-dev libxcb-composite0-dev python3-xcbgen xcb-proto libxcb-image0-dev libxcb-ewmh-dev libxcb-icccm4-dev libxcb-xkb-dev libxcb-xrm-dev libxcb-cursor-dev libasound2-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libnl-genl-3-dev
+
+sudo apt install -y libpcre3-dev libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev libxcb-glx0-dev
+
+sudo apt install -y libstartup-notification0-dev libxcb-keysyms1-dev libxkbcommon-dev libxkbcommon-x11-dev libyajl-dev libpango1.0-dev
+
+sudo apt install -y ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing nerdfonts...${endColour}"
@@ -125,16 +131,10 @@ cd ../..
 
 pip3 install pywal 
 
-clear
-echo -e "${greenColour}[+]${endColour} ${grayColour}Installing picom dependencies...${endColour}"
-
-sudo apt update
-sudo apt install meson libpcre3-dev libxext-dev libxcb1-dev libxcb-damage0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-render-util0-dev libxcb-render0-dev libxcb-randr0-dev libxcb-composite0-dev libxcb-image0-dev libxcb-present-dev libxcb-xinerama0-dev libpixman-1-dev libdbus-1-dev libconfig-dev libgl1-mesa-dev libpcre2-dev libevdev-dev uthash-dev libev-dev libx11-xcb-dev libxcb-glx0-dev
-
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing picom...${endColour}"
-sudo apt remove picom 
+sudo apt remove -y picom 
 git clone https://github.com/ibhagwan/picom.git 
 cd picom/
 git submodule update --init --recursive
@@ -169,7 +169,7 @@ cp -r .config/rofi/ /home/$CUSER/.config/
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing zsh...${endColour}"
-sudo apt install zsh 
+sudo apt install -y zsh 
 
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /opt/powerlevel10k
@@ -209,11 +209,10 @@ chmod +x /opt/bin/settarget
 
 clear 
 
-sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing Neovim...${endColour}"
 echo -e "${redColour}[!]${endColour} ${grayColour}Removing old versions of Neovim...${endColour}"
 sleep 3 
-sudo apt remove neovim 
+sudo apt remove -y neovim 
 
 mkdir /opt/nvim
 git clone https://github.com/neovim/neovim 
