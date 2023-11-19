@@ -141,7 +141,7 @@ bar {
 }
 
 # i3-gaps
-for_window [class="^.*"] border pixel 2
+for_window [class="^.*"] border pixel 0
 gaps inner 2
 gaps outer 4
 
