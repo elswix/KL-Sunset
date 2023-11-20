@@ -135,9 +135,11 @@ pip3 install pywal
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing picom...${endColour}"
 sudo apt remove -y picom 
+sudo apt install -y meson
 git clone https://github.com/ibhagwan/picom.git 
 cd picom/
 git submodule update --init --recursive
+
 meson --buildtype=release . build
 ninja -C build
 sudo ninja -C build install
@@ -225,9 +227,10 @@ ln -s -f /opt/nvim/bin/nvim /opt/bin/nvim
 
 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing NVChad for Neovim...${endColour}"
+
 git clone https://github.com/NvChad/NvChad .config/nvim --depth 1  
-cp -r ./.config/nvim /home/$CUSER/.config/ 
-sudo cp -r ./.config/nvim /root/.config/
+cp -r .config/nvim /home/$CUSER/.config/ 
+sudo cp -r .config/nvim /root/.config/
 
 
 clear
