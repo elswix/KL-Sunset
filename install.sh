@@ -10,23 +10,17 @@ purpleColour="\e[0;35m\033[1m"
 turquoiseColour="\e[0;36m\033[1m"
 grayColour="\e[0;37m\033[1m"
 
-echo -e "\n${greenColour}[+]${endColour} ${grayColour}Insalling${endColour} ${purpleColour}KL-Sunset${endColour}${grayColour}...${endColour}"
-echo -e "\n${redColour}[!]${endColour} ${grayColour}Please be careful. If you are using Parrot OS, change \"apt upgrade -y\" to \"parrot-upgrade\"${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}You shouldn't run this script as root, as it may cause some problems.${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}At some points, you may be prompted for the current user's password to execute certain instructions as root.${endColour}"
-echo -e "\n${yellowColour}[*]${endColour}${grayColour} Author: elswix${endColour}"
 
-sleep 5
-
-
-export CUSER=$(whoami)
-
-
-if [ $CUSER = "root" ]; then 
+if [ $EUID = 0 ]; then 
   
-  echo -e "\n\n${redColour}[!]${endColour} ${grayColour}You can't execute this script as root!${endColour}\n"
+  echo -e "\n${redColour}[!]${endColour} ${grayColour}You can't execute this script as root!${endColour}\n"
   exit 1 
 fi
+
+echo -e "\n${greenColour}[+]${endColour} ${grayColour}Insalling${endColour} ${purpleColour}KL-Sunset${endColour}${grayColour}...${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}You shouldn't run this script as root, as it may cause some problems.${endColour}"
+echo -e "\n${yellowColour}[*]${endColour}${grayColour} Author: elswix${endColour}"
+
 
 sleep 5
 
@@ -47,23 +41,22 @@ sleep 1
 echo -e "${greenColour}[+]${endColour} ${grayColour}Upgrading all packages${endColour}"
 sudo apt update && sudo apt upgrade -y
 
-export CUSER=$(whoami)
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Creating backups in /tmp/.backupConfig...${endColour}"
 echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /opt to /tmp/.backupConfig/opt${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$CUSER/.config to /tmp/.backupConfig/$CUSER/.config${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$USER/.config to /tmp/.backupConfig/$USER/.config${endColour}"
 echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /root/.config to /tmp/.backupConfig/root/.config${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$CUSER/.zshrc to /tmp/.backupConfig/$CUSER/.zshrc${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$USER/.zshrc to /tmp/.backupConfig/$USER/.zshrc${endColour}"
 echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /root/.zshrc to /tmp/.backupConfig/root/.zshrc${endColour}"
 
 mkdir /tmp/.backupConfig
-mkdir /tmp/.backupConfig/$CUSER 
+mkdir /tmp/.backupConfig/$USER 
 mkdir /tmp/.backupConfig/root
 sudo cp -r /opt /tmp/.backupConfig/opt 
-cp -r /home/$CUSER/.config /tmp/.backupConfig/$CUSER/.config 
+cp -r /home/$USER/.config /tmp/.backupConfig/$USER/.config 
 sudo cp -r /root/.config /tmp/.backupConfig/root/.config 
-cp /home/$CUSER/.zshrc /tmp/.backupConfig/$CUSER/.zshrc 
+cp /home/$USER/.zshrc /tmp/.backupConfig/$USER/.zshrc 
 sudo cp /root/.zshrc /tmp/.backupConfig/root/.zshrc 
 
 
@@ -72,7 +65,7 @@ sudo chown $USER:$USER -R /opt
 clear 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing dependencies...${endColour}"
 
-sudo apt install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail burpsuite
+sudo apt install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail
 
 sudo apt install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev libasound2-dev libxcb-xtest0-dev libxcb-ewmh-dev autoconf meson
 
@@ -84,7 +77,11 @@ sudo apt install -y libpcre3-dev libxext-dev libxcb1-dev libxcb-damage0-dev libx
 
 sudo apt install -y libstartup-notification0-dev libxcb-keysyms1-dev libxkbcommon-dev libxkbcommon-x11-dev libyajl-dev libpango1.0-dev
 
+sudo apt install -y libconfig-dev libdbus-1-dev libegl-dev libev-dev libgl-dev libepoxy-dev libpcre2-dev libpixman-1-dev libx11-xcb-dev libxcb1-dev libxcb-composite0-dev libxcb-damage0-dev libxcb-dpms0-dev libxcb-glx0-dev libxcb-image0-dev libxcb-present-dev libxcb-randr0-dev libxcb-render0-dev libxcb-render-util0-dev libxcb-shape0-dev libxcb-util-dev libxcb-xfixes0-dev libxext-dev meson ninja-build uthash-dev
+
 sudo apt install -y ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip
+
+sudo apt install -y xcb
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing nerdfonts...${endColour}"
@@ -113,10 +110,10 @@ clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing kitty...${endColour}" 
 
 curl -L https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin 
-sudo ln -s -f /home/$CUSER/.local/kitty.app/bin/kitty /usr/bin/kitty
-sudo ln -s -f /home/$CUSER/.local/kitty.app/bin/kitten /usr/bin/kitten
+sudo ln -s -f /home/$USER/.local/kitty.app/bin/kitty /usr/bin/kitty
+sudo ln -s -f /home/$USER/.local/kitty.app/bin/kitten /usr/bin/kitten
 pkill kitty 
-sudo cp /home/$CUSER/.local/kitty.app/lib/kitty/terminfo/x/xterm-kitty /usr/share/terminfo/x/xterm-kitty
+sudo cp /home/$USER/.local/kitty.app/lib/kitty/terminfo/x/xterm-kitty /usr/share/terminfo/x/xterm-kitty
 
 clear 
 
@@ -133,41 +130,42 @@ pip3 install pywal
 
 
 clear
-echo -e "${greenColour}[+]${endColour} ${grayColour}Installing picom...${endColour}"
-sudo apt remove -y picom 
-sudo apt install -y meson
-git clone https://github.com/ibhagwan/picom.git 
-cd picom/
-git submodule update --init --recursive
 
-meson --buildtype=release . build
+echo -e "${greenColour}[+]${endColour} ${grayColour}Installing picom...${endColour}"
+
+oldpwd1=$(pwd)
+wget https://github.com/yshui/picom/archive/refs/tags/v11.1.zip -O /opt/picom.zip
+unzip /opt/picom.zip -d /opt/picom
+cd /opt/picom/picom-11.1
+meson setup --buildtype=release build
 ninja -C build
 sudo ninja -C build install
-cd ../ 
+cd $oldpwd1
 
 clear
+
 echo -e "${greenColour}[+]${endColour} ${grayColour}Copying configs...${endColour}"
 
 
 # Wallpaper
-cp .fehbg /home/$CUSER/.fehbg 
-mkdir /home/$CUSER/.wpaper 
-cp .wpaper/wpaper.jpg /home/$CUSER/.wpaper/wpaper.jpg
+cp .fehbg /home/$USER/.fehbg 
+mkdir /home/$USER/.wpaper 
+cp .wpaper/wpaper.jpg /home/$USER/.wpaper/wpaper.jpg
 
 
 # Kitty
-cp -r .config/kitty /home/$CUSER/.config/
-sudo ln -s -f /home/$CUSER/.config/kitty /root/.config/kitty
+cp -r .config/kitty /home/$USER/.config/
+sudo ln -s -f /home/$USER/.config/kitty /root/.config/kitty
 
 # i3
-cp -r .config/i3/ /home/$CUSER/.config/ 
+cp -r .config/i3/ /home/$USER/.config/ 
 
 # Picom 
-cp -r .config/picom/ /home/$CUSER/.config/ 
+cp -r .config/picom/ /home/$USER/.config/ 
 
 
 # Rofi
-cp -r .config/rofi/ /home/$CUSER/.config/
+cp -r .config/rofi/ /home/$USER/.config/
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing zsh...${endColour}"
@@ -176,7 +174,7 @@ sudo apt install -y zsh
 
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git /opt/powerlevel10k
 
-sudo usermod --shell /usr/bin/zsh $CUSER
+sudo usermod --shell /usr/bin/zsh $USER
 sudo usermod --shell /usr/bin/zsh root
 
 cp .p10k/.p10k.zsh /home/$USER/.p10k.zsh 
@@ -188,8 +186,8 @@ sudo cp -r ./.zshPlugins/zsh-autosuggestions /usr/share/
 sudo cp -r ./.zshPlugins/zsh-syntax-highlighting /usr/share/
 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Linking root zshrc to $USER zshrc...${endColour}"
-cp .zshrc /home/$CUSER/.zshrc
-sudo ln -s -f /home/$CUSER/.zshrc /root/.zshrc 
+cp .zshrc /home/$USER/.zshrc
+sudo ln -s -f /home/$USER/.zshrc /root/.zshrc 
 
 clear 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing lsd...${endColour}"
@@ -216,21 +214,26 @@ echo -e "${redColour}[!]${endColour} ${grayColour}Removing old versions of Neovi
 sleep 3 
 sudo apt remove -y neovim 
 
-mkdir /opt/nvim
-git clone https://github.com/neovim/neovim 
-cd neovim/
-make CMAKE_BUILD_TYPE=RelWithDebInfo CMAKE_INSTALL_PREFIX=/opt/nvim/
-sudo make install
-cd ../ 
+
+wget https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz
+tar -xf nvim-linux64.tar.gz
+mv nvim-linux64 /opt/nvim
 
 ln -s -f /opt/nvim/bin/nvim /opt/bin/nvim 
 
 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing NVChad for Neovim...${endColour}"
+echo -e "${greenColour}[+]${endColour} ${grayColour}More information about its installation:${endColour}"
+echo -e "${yellowColour}[*]${endColour} ${purpleColour}https://nvchad.com/docs/quickstart/install/${endColour}"
 
-git clone https://github.com/NvChad/NvChad .config/nvim --depth 1  
-cp -r .config/nvim /home/$CUSER/.config/ 
-sudo cp -r .config/nvim /root/.config/
+
+rm -rf ~/.config/nvim
+rm -rf ~/.local/share/nvim
+sudo rm -rf /root/.config/nvim
+sudo rm -rf /root/.local/share/nvim
+git clone https://github.com/NvChad/starter ~/.config/nvim
+sudo git clone https://github.com/NvChad/starter /root/.config/nvim
+
 
 
 clear
