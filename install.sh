@@ -44,20 +44,20 @@ sudo apt update && sudo apt upgrade -y
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Creating backups in /tmp/.backupConfig...${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /opt to /tmp/.backupConfig/opt${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$USER/.config to /tmp/.backupConfig/$USER/.config${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /root/.config to /tmp/.backupConfig/root/.config${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$USER/.zshrc to /tmp/.backupConfig/$USER/.zshrc${endColour}"
-echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /root/.zshrc to /tmp/.backupConfig/root/.zshrc${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /opt to /home/$USER/backup/opt${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$USER/.config to /home/$USER/backup/$USER/.config${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /root/.config to /home/$USER/backup/root/.config${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /home/$USER/.zshrc to /home/$USER/backup/$USER/.zshrc${endColour}"
+echo -e "${redColour}[!]${endColour} ${grayColour}Backing up /root/.zshrc to /home/$USER/backup/root/.zshrc${endColour}"
 
-mkdir /tmp/.backupConfig
-mkdir /tmp/.backupConfig/$USER 
-mkdir /tmp/.backupConfig/root
-sudo cp -r /opt /tmp/.backupConfig/opt 
-cp -r /home/$USER/.config /tmp/.backupConfig/$USER/.config 
-sudo cp -r /root/.config /tmp/.backupConfig/root/.config 
-cp /home/$USER/.zshrc /tmp/.backupConfig/$USER/.zshrc 
-sudo cp /root/.zshrc /tmp/.backupConfig/root/.zshrc 
+mkdir /home/$USER/backup
+mkdir /home/$USER/backup/$USER 
+mkdir /home/$USER/backup/root
+sudo cp -r /opt /home/$USER/backup/opt 
+cp -r /home/$USER/.config /home/$USER/backup/$USER/.config 
+sudo cp -r /root/.config /home/$USER/backup/root/.config 
+cp /home/$USER/.zshrc /home/$USER/backup/$USER/.zshrc 
+sudo cp /root/.zshrc /home/$USER/backup/root/.zshrc 
 
 
 sudo chown $USER:$USER -R /opt 
@@ -65,7 +65,7 @@ sudo chown $USER:$USER -R /opt
 clear 
 echo -e "${greenColour}[+]${endColour} ${grayColour}Installing dependencies...${endColour}"
 
-sudo apt install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail
+sudo apt install -y arandr flameshot arc-theme bat feh i3blocks i3status i3 i3-wm lxappearance python3-pip rofi unclutter cargo papirus-icon-theme imagemagick firejail curl wget git
 
 sudo apt install -y libxcb-shape0-dev libxcb-keysyms1-dev libpango1.0-dev libxcb-util0-dev xcb libxcb1-dev libxcb-icccm4-dev libyajl-dev libev-dev libxcb-xkb-dev libxcb-cursor-dev libxkbcommon-dev libxcb-xinerama0-dev libxkbcommon-x11-dev libstartup-notification0-dev libxcb-randr0-dev libxcb-xrm0 libxcb-xrm-dev libasound2-dev libxcb-xtest0-dev libxcb-ewmh-dev autoconf meson
 
@@ -197,6 +197,11 @@ rm -rf './lsd_0.23.1_amd64.deb'
 
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Copying i3blocks scripts...${endColour}"
+
+interface0=$(ip -br a | awk '{print $1}' | grep -vE 'lo|docker|veth')
+
+sed "s/eth0/$interface0/" .scripts/ethernet_status -i
+
 sudo cp .scripts/ethernet_status /usr/share/i3blocks/ethernet_status 
 sudo cp .scripts/hackthebox_status /usr/share/i3blocks/hackthebox_status 
 sudo cp .scripts/target /usr/share/i3blocks/target 
