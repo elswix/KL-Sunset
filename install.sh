@@ -198,7 +198,7 @@ rm -rf './lsd_0.23.1_amd64.deb'
 clear
 echo -e "${greenColour}[+]${endColour} ${grayColour}Copying i3blocks scripts...${endColour}"
 
-interface0=$(ip -br a | awk '{print $1}' | grep -vE 'lo|docker|veth')
+interface0=$(ip route | grep default | awk '{print $5}')
 
 sed "s/eth0/$interface0/" .scripts/ethernet_status -i
 
